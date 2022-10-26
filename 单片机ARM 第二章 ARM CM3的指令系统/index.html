@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     
-    <title>第2章 ARM CM3的指令系统 - Hexo</title>
+    <title>第2章 ARM CM3的指令系统 - 璃雲の部屋</title>
     <meta charset="UTF-8">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
@@ -14,9 +14,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="第2章 ARM CM3的指令系统">
 <meta property="og:url" content="http://example.com/%E5%8D%95%E7%89%87%E6%9C%BAARM%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%20ARM%20CM3%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="璃雲の部屋">
 <meta property="og:description" content="第二章 ARM CM3的指令系统2.1概述 一、CM3支持两种指令集 绝大多数16 位thumb 指令 基本的32位thumb-2 指令集架构 不支持32位ARM 指令   二、支持两种工作模式 线程模式 处理模式   三、支持两级访问权限 特权权限 用户权限   四、支持两种工作状态 Thumb 状态：16 位和32 位半字对齐的thumb 和thumb-2 指令的正常执行状态 调试状态：处理器">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://rjkiaj1fv.hd-bkt.clouddn.com/img/202210112043653.png">
 <meta property="article:published_time" content="2022-10-11T12:18:16.688Z">
 <meta property="article:modified_time" content="2022-10-11T12:52:24.844Z">
@@ -28,20 +28,20 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1665494067517">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1665580660384">
     
-    <link rel="stylesheet" href="/css/style.css?v=1665494067517">
+    <link rel="stylesheet" href="/css/style.css?v=1665580660384">
 
     
         
-            <link rel="stylesheet" href="/custom.css?v=1665494067517">
+            <link rel="stylesheet" href="/custom.css?v=1665580660384">
         
     
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 <body class="mdui-drawer-body-left">
     <div id="nexmoe-background">
-        <div class="nexmoe-bg" style="background-image: url(http://121.36.143.22/img/hexo/%E5%A5%B3%E4%BB%86.png)"></div>
+        <div class="nexmoe-bg" style="background-image: url(http://121.36.143.22/img/hexo/东方.jpg)"></div>
         <div class="mdui-appbar mdui-shadow-0">
             <div class="mdui-toolbar">
                 <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
@@ -59,9 +59,9 @@
         </a>
     </div>
     <div class="nexmoe-count">
-        <div><span>Articles</span>3</div>
-        <div><span>Tags</span>0</div>
-        <div><span>Categories</span>0</div>
+        <div><span>文章</span>2</div>
+        <div><span>标签</span>0</div>
+        <div><span>分类</span>0</div>
     </div>
     <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
         
@@ -94,7 +94,7 @@
     <div class="nexmoe-widget nexmoe-search">
         
             <form id="search_form">
-                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="Search" style="
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="搜索" style="
                     font-size: 15px !important;
                     height: 56px !important;
                     background-image: none;
@@ -105,7 +105,7 @@
 </div>
 
 
-	<script async src="/js/search.js?v=1665494067518"></script>
+	<script async src="/js/search.js?v=1665580660385"></script>
 
 
 
@@ -168,9 +168,9 @@
         
         
   <div class="nexmoe-widget-wrap">
-    <h3 class="nexmoe-widget-title">Archive</h3>
+    <h3 class="nexmoe-widget-title">文章归档</h3>
     <div class="nexmoe-widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -193,7 +193,7 @@
   <article>
     
         <div class="nexmoe-post-cover"> 
-            <img src="http://121.36.143.22/img/hexo/%E5%A5%B3%E4%BB%86.png" alt="第2章 ARM CM3的指令系统" loading="lazy">
+            <img src="http://121.36.143.22/img/hexo/东方.jpg" alt="第2章 ARM CM3的指令系统" loading="lazy">
             <h1>第2章 ARM CM3的指令系统</h1>
         </div>
     
@@ -264,14 +264,14 @@
 </li>
 </ul>
 <h2 id="2-3工作模式、访问权限的转换"><a href="#2-3工作模式、访问权限的转换" class="headerlink" title="2.3工作模式、访问权限的转换"></a>2.3工作模式、访问权限的转换</h2><h2 id="2-4数据类型与存储器格式"><a href="#2-4数据类型与存储器格式" class="headerlink" title="2.4数据类型与存储器格式"></a>2.4数据类型与存储器格式</h2><h2 id="2-5寄存器"><a href="#2-5寄存器" class="headerlink" title="2.5寄存器"></a>2.5寄存器</h2><h2 id="2-6异常与中断"><a href="#2-6异常与中断" class="headerlink" title="2.6异常与中断"></a>2.6异常与中断</h2><h2 id="2-7向量表"><a href="#2-7向量表" class="headerlink" title="2.7向量表"></a>2.7向量表</h2><h2 id="2-8堆栈操作"><a href="#2-8堆栈操作" class="headerlink" title="2.8堆栈操作"></a>2.8堆栈操作</h2><h2 id="2-9复位序列"><a href="#2-9复位序列" class="headerlink" title="2.9复位序列"></a>2.9复位序列</h2>
-    <p><img data-fancybox="gallery" src="http://121.36.143.22/img/hexo/%E5%A5%B3%E4%BB%86.png"  alt="可爱的小女仆" data-caption="53a8c7cf3ad77a0f0a456ce2c6afe88a.png" loading="lazy"></p>
+    <p><img data-fancybox="gallery" src="http://121.36.143.22/img/hexo/21.jpg"  alt="可爱的小女仆" data-caption="53a8c7cf3ad77a0f0a456ce2c6afe88a.png" loading="lazy"></p>
   </article>
 
   
       
     <div class="nexmoe-post-copyright">
-        <strong>Author：</strong>Rikumo Rinnku<br>
-        <strong>Link：</strong><a href="http://example.com/%E5%8D%95%E7%89%87%E6%9C%BAARM%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%20ARM%20CM3%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" title="http:&#x2F;&#x2F;example.com&#x2F;%E5%8D%95%E7%89%87%E6%9C%BAARM%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%20ARM%20CM3%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;%E5%8D%95%E7%89%87%E6%9C%BAARM%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%20ARM%20CM3%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F&#x2F;</a><br>
+        <strong>本文作者：</strong>Rikumo Rinnku<br>
+        <strong>本文链接：</strong><a href="http://example.com/%E5%8D%95%E7%89%87%E6%9C%BAARM%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%20ARM%20CM3%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" title="http:&#x2F;&#x2F;example.com&#x2F;%E5%8D%95%E7%89%87%E6%9C%BAARM%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%20ARM%20CM3%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;%E5%8D%95%E7%89%87%E6%9C%BAARM%20%E7%AC%AC%E4%BA%8C%E7%AB%A0%20ARM%20CM3%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F&#x2F;</a><br>
         
             <strong>版权声明：</strong>转载请标注出处
         
@@ -322,7 +322,7 @@
 				<input
 					class="search-input"
 					type="text"
-					placeholder="Search"
+					placeholder="搜索"
 					oninput="sinput();"
 				/>
 			</div>
@@ -339,7 +339,7 @@
 
  
 
-<script async src="/js/app.js?v=1665494067524"></script>
+<script async src="/js/app.js?v=1665580660392"></script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
 
