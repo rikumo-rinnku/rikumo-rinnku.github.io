@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>03开发准备工作 | 璃雲の部屋</title><meta name="author" content="Rikumo.Rinnku"><meta name="copyright" content="Rikumo.Rinnku"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开发准备工作icon图标准备 项目图标文件会在src&#x2F;assets&#x2F;styles目录下，assets是vue项目中存放项目的静态资源文件，如图片、字体等的文件夹。  图标生成把整理好的图标通过icomoon网站生成demo，再插入到项目文件夹中，下载好的文件如下：  打开demo可以看到生成情况  导入 将fonts文件夹粘贴到src&#x2F;assets&#x2F;styl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03开发准备工作">
+<meta property="og:url" content="http://rikumo-rinnku.github.io/03%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/index.html">
+<meta property="og:site_name" content="璃雲の部屋">
+<meta property="og:description" content="开发准备工作icon图标准备 项目图标文件会在src&#x2F;assets&#x2F;styles目录下，assets是vue项目中存放项目的静态资源文件，如图片、字体等的文件夹。  图标生成把整理好的图标通过icomoon网站生成demo，再插入到项目文件夹中，下载好的文件如下：  打开demo可以看到生成情况  导入 将fonts文件夹粘贴到src&#x2F;assets&#x2F;styl">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E6%B0%B4%E5%A1%94.jpg">
+<meta property="article:published_time" content="2024-03-05T10:00:00.000Z">
+<meta property="article:modified_time" content="2024-07-27T15:59:59.443Z">
+<meta property="article:author" content="Rikumo.Rinnku">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E6%B0%B4%E5%A1%94.jpg"><link rel="shortcut icon" href="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E7%99%BD%E6%AF%9B%E5%90%B8%E8%A1%80%E9%AC%BC.png"><link rel="canonical" href="http://rikumo-rinnku.github.io/03%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '03开发准备工作',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-07-27 23:59:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E7%99%BD%E6%AF%9B%E5%90%B8%E8%A1%80%E9%AC%BC.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E6%B0%B4%E5%A1%94.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">璃雲の部屋</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">03开发准备工作</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-05T10:00:00.000Z" title="发表于 2024-03-05 18:00:00">2024-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-07-27T15:59:59.443Z" title="更新于 2024-07-27 23:59:59">2024-07-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%88%86%E7%B1%BB/">分类</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="03开发准备工作"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="开发准备工作"><a href="#开发准备工作" class="headerlink" title="开发准备工作"></a>开发准备工作</h1><h2 id="icon图标准备"><a href="#icon图标准备" class="headerlink" title="icon图标准备"></a>icon图标准备</h2><blockquote>
+<p>项目图标文件会在src&#x2F;assets&#x2F;styles目录下，assets是vue项目中存放项目的静态资源文件，如图片、字体等的文件夹。</p>
+</blockquote>
+<h3 id="图标生成"><a href="#图标生成" class="headerlink" title="图标生成"></a>图标生成</h3><p>把整理好的图标通过<a target="_blank" rel="noopener" href="https://icomoon.io/">icomoon</a>网站生成demo，再插入到项目文件夹中，下载好的文件如下：</p>
+<p><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/img/202403121801695.png" alt="image-20240312180117025"></p>
+<p>打开demo可以看到生成情况</p>
+<p><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/img/202403121644789.png" alt="image-20240312164407305"></p>
+<h3 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h3><ol>
+<li>将fonts文件夹粘贴到src&#x2F;assets&#x2F;styles目录下</li>
+<li>style.css改名为icon.css粘贴到src&#x2F;assets目录下<br><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/img/202403121804758.png" alt="image-20240312180449988"></li>
+</ol>
+<h2 id="viewport属性配置"><a href="#viewport属性配置" class="headerlink" title="viewport属性配置"></a>viewport属性配置</h2><blockquote>
+<p>为了避免手机上用户缩放误触</p>
+</blockquote>
+<ul>
+<li>viewport用来设置用户在手机上的可视区域</li>
+<li>width&#x3D;device-width：指定viewport宽度为设备宽度，<br>initial-scale&#x3D;1.0：指定默认缩放比例为1:1</li>
+<li>通过maximum-scale和minimum-scale限定屏幕缩放比例为1:1<br>通过user-scalable限制用户对屏幕进行缩放</li>
+</ul>
+<p>在index.html文件中找到viewport属性，添加</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">maximum-scale = 1.0,minimum-scale=1.0,user-scalable=no</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/img/202403121811660.png" alt="image-20240312181109527"></p>
+<h2 id="rem配置"><a href="#rem配置" class="headerlink" title="rem配置"></a>rem配置</h2><ul>
+<li>rem是css3新增的一个相对长度单位</li>
+<li>rem的值相当于根元素font-size值的倍数<br>1rem &#x3D;根元素font-size<br>2rem &#x3D;根元素font-size ＊ 2</li>
+<li>DOMContentLoaded事件动态设置根元素font-size<br>html.style.fontSize &#x3D; window.innerWidth&#x2F; 10 + ‘px’<br>这样子设置可以使得屏幕宽度发生变化时，rem也发生变化</li>
+</ul>
+<p>在app.vue中添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 页面加载完成后设置根元素字体大小</span><br><span class="line">document.addEventListener(&#x27;DOMContentLoaded&#x27;, () =&gt; &#123;</span><br><span class="line">  const html = document.querySelector(&#x27;html&#x27;)</span><br><span class="line">  let fontSize = window.innerWidth / 10</span><br><span class="line">  fontSize = fontSize &gt; 50 ? 50 : fontSize</span><br><span class="line">  html.style.fontSize = fontSize + &#x27;px&#x27;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="引入reset-scss和global-scss全局样式"><a href="#引入reset-scss和global-scss全局样式" class="headerlink" title="引入reset.scss和global.scss全局样式"></a>引入reset.scss和global.scss全局样式</h2><ul>
+<li>reset.scss的目的是为了消除不同浏览器默认样式的不一致性</li>
+<li>global.scss规定了整个站点的公共样式、公共方法和公共参数等<ul>
+<li>global中实现px2rem方法，将px转化为rem</li>
+</ul>
+</li>
+</ul>
+<h3 id="reset-scss"><a href="#reset-scss" class="headerlink" title="reset.scss"></a>reset.scss</h3><p>这个是固定的，自己添加的是html, body</p>
+<p>放在style文件夹下</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* http://meyerweb.com/eric/tools/css/reset/ </span></span><br><span class="line"><span class="comment">   v2.0 | 20110126</span></span><br><span class="line"><span class="comment">   License: none (public domain)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">html</span>, <span class="selector-tag">body</span>, <span class="selector-tag">div</span>, <span class="selector-tag">span</span>, applet, <span class="selector-tag">object</span>, <span class="selector-tag">iframe</span>,</span><br><span class="line"><span class="selector-tag">h1</span>, <span class="selector-tag">h2</span>, <span class="selector-tag">h3</span>, <span class="selector-tag">h4</span>, <span class="selector-tag">h5</span>, <span class="selector-tag">h6</span>, <span class="selector-tag">p</span>, <span class="selector-tag">blockquote</span>, pre,</span><br><span class="line"><span class="selector-tag">a</span>, <span class="selector-tag">abbr</span>, acronym, <span class="selector-tag">address</span>, big, <span class="selector-tag">cite</span>, <span class="selector-tag">code</span>,</span><br><span class="line"><span class="selector-tag">del</span>, <span class="selector-tag">dfn</span>, <span class="selector-tag">em</span>, <span class="selector-tag">img</span>, <span class="selector-tag">ins</span>, <span class="selector-tag">kbd</span>, <span class="selector-tag">q</span>, s, <span class="selector-tag">samp</span>,</span><br><span class="line">small, strike, <span class="selector-tag">strong</span>, sub, <span class="selector-tag">sup</span>, tt, <span class="selector-tag">var</span>,</span><br><span class="line"><span class="selector-tag">b</span>, u, <span class="selector-tag">i</span>, center,</span><br><span class="line"><span class="selector-tag">dl</span>, <span class="selector-tag">dt</span>, <span class="selector-tag">dd</span>, <span class="selector-tag">ol</span>, <span class="selector-tag">ul</span>, <span class="selector-tag">li</span>,</span><br><span class="line"><span class="selector-tag">fieldset</span>, <span class="selector-tag">form</span>, <span class="selector-tag">label</span>, <span class="selector-tag">legend</span>,</span><br><span class="line"><span class="selector-tag">table</span>, <span class="selector-tag">caption</span>, <span class="selector-tag">tbody</span>, <span class="selector-tag">tfoot</span>, <span class="selector-tag">thead</span>, <span class="selector-tag">tr</span>, <span class="selector-tag">th</span>, <span class="selector-tag">td</span>,</span><br><span class="line"><span class="selector-tag">article</span>, <span class="selector-tag">aside</span>, <span class="selector-tag">canvas</span>, <span class="selector-tag">details</span>, embed, </span><br><span class="line"><span class="selector-tag">figure</span>, <span class="selector-tag">figcaption</span>, <span class="selector-tag">footer</span>, <span class="selector-tag">header</span>, <span class="selector-tag">hgroup</span>, </span><br><span class="line"><span class="selector-tag">menu</span>, <span class="selector-tag">nav</span>, output, ruby, <span class="selector-tag">section</span>, <span class="selector-tag">summary</span>,</span><br><span class="line"><span class="selector-tag">time</span>, <span class="selector-tag">mark</span>, <span class="selector-tag">audio</span>, <span class="selector-tag">video</span> &#123;</span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">	<span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">	<span class="attribute">border</span>: <span class="number">0</span>;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">100%</span>;</span><br><span class="line">	<span class="attribute">font</span>: inherit;</span><br><span class="line">	<span class="attribute">vertical-align</span>: baseline;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* HTML5 display-role reset for older browsers */</span></span><br><span class="line"><span class="selector-tag">article</span>, <span class="selector-tag">aside</span>, <span class="selector-tag">details</span>, <span class="selector-tag">figcaption</span>, <span class="selector-tag">figure</span>, </span><br><span class="line"><span class="selector-tag">footer</span>, <span class="selector-tag">header</span>, <span class="selector-tag">hgroup</span>, <span class="selector-tag">menu</span>, <span class="selector-tag">nav</span>, <span class="selector-tag">section</span> &#123;</span><br><span class="line">	<span class="attribute">display</span>: block;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">ol</span>, <span class="selector-tag">ul</span> &#123;</span><br><span class="line">	<span class="attribute">list-style</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">blockquote</span>, <span class="selector-tag">q</span> &#123;</span><br><span class="line">	<span class="attribute">quotes</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">blockquote</span><span class="selector-pseudo">:before</span>, <span class="selector-tag">blockquote</span><span class="selector-pseudo">:after</span>,</span><br><span class="line"><span class="selector-tag">q</span><span class="selector-pseudo">:before</span>, <span class="selector-tag">q</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">	<span class="attribute">content</span>: <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">	<span class="attribute">content</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">table</span> &#123;</span><br><span class="line">	<span class="attribute">border-collapse</span>: collapse;</span><br><span class="line">	<span class="attribute">border-spacing</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">html</span>, <span class="selector-tag">body</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&#x27;PingFangSC-Light&#x27;</span>,<span class="string">&#x27;PingFang SC&#x27;</span>,<span class="string">&#x27;STHeitisC-Light&#x27;</span>,<span class="string">&#x27;HeLvetica-Light&#x27;</span>,<span class="string">&#x27;Arial&#x27;</span>,<span class="string">&#x27;sans-serif&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="global-scss"><a href="#global-scss" class="headerlink" title="global.scss"></a>global.scss</h3><p>路径与reset一样</p>
+<p>实现px2rem与居中方法</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> <span class="string">&#x27;reset&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$fonsSize</span>: <span class="number">37.5</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@function</span> px2rem(<span class="variable">$px</span>) &#123;</span><br><span class="line">    <span class="keyword">@return</span> (<span class="variable">$px</span> / <span class="variable">$fonsSize</span>)+rem;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@mixin</span> center() &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>记得在main.js中引用</p>
+<p><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/img/202403121820246.png" alt="image-20240312182040765"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://rikumo-rinnku.github.io">Rikumo.Rinnku</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://rikumo-rinnku.github.io/03%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/">http://rikumo-rinnku.github.io/03%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://rikumo-rinnku.github.io" target="_blank">璃雲の部屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E6%B0%B4%E5%A1%94.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/04epub%E7%94%B5%E5%AD%90%E4%B9%A6%E6%B8%B2%E6%9F%93/"><img class="prev-cover" src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E6%B0%B4%E5%A1%94.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">04epub电子书渲染</div></div></a></div><div class="next-post pull-right"><a href="/02%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B%E4%B8%8E%E9%97%AE%E9%A2%98/"><img class="next-cover" src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E6%B0%B4%E5%A1%94.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">02环境配置过程与问题</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E7%99%BD%E6%AF%9B%E5%90%B8%E8%A1%80%E9%AC%BC.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Rikumo.Rinnku</div><div class="author-info__description">瞎折腾</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/rikumo-rinnku"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">开发准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#icon%E5%9B%BE%E6%A0%87%E5%87%86%E5%A4%87"><span class="toc-number">1.1.</span> <span class="toc-text">icon图标准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E6%A0%87%E7%94%9F%E6%88%90"><span class="toc-number">1.1.1.</span> <span class="toc-text">图标生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5"><span class="toc-number">1.1.2.</span> <span class="toc-text">导入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#viewport%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">viewport属性配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rem%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.</span> <span class="toc-text">rem配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E5%85%A5reset-scss%E5%92%8Cglobal-scss%E5%85%A8%E5%B1%80%E6%A0%B7%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">引入reset.scss和global.scss全局样式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#reset-scss"><span class="toc-number">1.4.1.</span> <span class="toc-text">reset.scss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#global-scss"><span class="toc-number">1.4.2.</span> <span class="toc-text">global.scss</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/%E5%9B%BE%E7%9A%84%E9%83%A8%E5%88%86%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="图的部分基础概念"><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E6%B0%B4%E5%A1%94.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="图的部分基础概念"/></a><div class="content"><a class="title" href="/%E5%9B%BE%E7%9A%84%E9%83%A8%E5%88%86%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="图的部分基础概念">图的部分基础概念</a><time datetime="2025-01-14T16:00:00.000Z" title="发表于 2025-01-15 00:00:00">2025-01-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/C++%20String%E7%B1%BB%E5%B8%B8%E7%94%A8%E2%80%94%E2%80%94%E5%85%83%E7%B4%A0%E5%88%A0%E9%99%A4%E4%B8%8E%E6%B7%BB%E5%8A%A0/" title="C++ String类常用——元素删除与添加"><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E6%B0%B4%E5%A1%94.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++ String类常用——元素删除与添加"/></a><div class="content"><a class="title" href="/C++%20String%E7%B1%BB%E5%B8%B8%E7%94%A8%E2%80%94%E2%80%94%E5%85%83%E7%B4%A0%E5%88%A0%E9%99%A4%E4%B8%8E%E6%B7%BB%E5%8A%A0/" title="C++ String类常用——元素删除与添加">C++ String类常用——元素删除与添加</a><time datetime="2024-09-30T16:00:00.000Z" title="发表于 2024-10-01 00:00:00">2024-10-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E5%8D%95%E7%89%87%E6%9C%BA%E7%AC%94%E8%AE%B0/" title="单片机笔记"><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E6%B0%B4%E5%A1%94.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单片机笔记"/></a><div class="content"><a class="title" href="/%E5%8D%95%E7%89%87%E6%9C%BA%E7%AC%94%E8%AE%B0/" title="单片机笔记">单片机笔记</a><time datetime="2024-03-20T05:07:45.187Z" title="发表于 2024-03-20 13:07:45">2024-03-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E4%BC%A0%E6%84%9F%E5%99%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF%E4%B8%8A%E8%AF%BE%E7%AC%94%E8%AE%B0/" title="雷达演讲资料收集"><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E6%B0%B4%E5%A1%94.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="雷达演讲资料收集"/></a><div class="content"><a class="title" href="/%E4%BC%A0%E6%84%9F%E5%99%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF%E4%B8%8A%E8%AF%BE%E7%AC%94%E8%AE%B0/" title="雷达演讲资料收集">雷达演讲资料收集</a><time datetime="2024-03-20T05:03:17.787Z" title="发表于 2024-03-20 13:03:17">2024-03-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/05%E6%A0%87%E9%A2%98%E6%A0%8F%E4%B8%8E%E8%8F%9C%E5%8D%95%E6%A0%8F/" title="05标题栏与菜单栏"><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E6%B0%B4%E5%A1%94.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="05标题栏与菜单栏"/></a><div class="content"><a class="title" href="/05%E6%A0%87%E9%A2%98%E6%A0%8F%E4%B8%8E%E8%8F%9C%E5%8D%95%E6%A0%8F/" title="05标题栏与菜单栏">05标题栏与菜单栏</a><time datetime="2024-03-12T10:00:00.000Z" title="发表于 2024-03-12 18:00:00">2024-03-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Rikumo.Rinnku</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
