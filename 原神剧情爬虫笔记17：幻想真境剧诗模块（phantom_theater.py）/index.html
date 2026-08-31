@@ -1,0 +1,430 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>原神剧情爬虫笔记17：幻想真境剧诗模块（phantom_theater.py） | 璃雲の部屋</title><meta name="author" content="Rikumo.Rinnku"><meta name="copyright" content="Rikumo.Rinnku"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文档记录了《原神》观测枢幻想真境剧诗（月谕圣牌）爬虫模块的设计思路、API 分析、数据结构解析和实现细节，适用于项目维护和后续扩展。  一、模块概述 模块名称：phantom_theater.py 功能：从米哈游观测枢 Wiki 爬取所有“幻想真境剧诗”玩法中的“月谕圣牌”描述文本，包括：  圣牌名称（如「月谕圣牌·一·魔法师」） 圣牌描述&#x2F;诗歌（每张牌包含一段诗意的文字，具有 Lore&#x2F;文化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原神剧情爬虫笔记17：幻想真境剧诗模块（phantom_theater.py）">
+<meta property="og:url" content="http://rikumo-rinnku.github.io/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B017%EF%BC%9A%E5%B9%BB%E6%83%B3%E7%9C%9F%E5%A2%83%E5%89%A7%E8%AF%97%E6%A8%A1%E5%9D%97%EF%BC%88phantom_theater.py%EF%BC%89/index.html">
+<meta property="og:site_name" content="璃雲の部屋">
+<meta property="og:description" content="本文档记录了《原神》观测枢幻想真境剧诗（月谕圣牌）爬虫模块的设计思路、API 分析、数据结构解析和实现细节，适用于项目维护和后续扩展。  一、模块概述 模块名称：phantom_theater.py 功能：从米哈游观测枢 Wiki 爬取所有“幻想真境剧诗”玩法中的“月谕圣牌”描述文本，包括：  圣牌名称（如「月谕圣牌·一·魔法师」） 圣牌描述&#x2F;诗歌（每张牌包含一段诗意的文字，具有 Lore&#x2F;文化">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E7%99%BD%E6%AF%9B%E5%90%B8%E8%A1%80%E9%AC%BC.png">
+<meta property="article:published_time" content="2026-08-31T08:30:00.000Z">
+<meta property="article:modified_time" content="2026-08-31T08:30:00.000Z">
+<meta property="article:author" content="Rikumo.Rinnku">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="原神爬虫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/%E7%99%BD%E6%AF%9B%E5%90%B8%E8%A1%80%E9%AC%BC.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "原神剧情爬虫笔记17：幻想真境剧诗模块（phantom_theater.py）",
+  "url": "http://rikumo-rinnku.github.io/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B017%EF%BC%9A%E5%B9%BB%E6%83%B3%E7%9C%9F%E5%A2%83%E5%89%A7%E8%AF%97%E6%A8%A1%E5%9D%97%EF%BC%88phantom_theater.py%EF%BC%89/",
+  "image": "https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/白毛吸血鬼.png",
+  "datePublished": "2026-08-31T08:30:00.000Z",
+  "dateModified": "2026-08-31T08:30:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Rikumo.Rinnku",
+      "url": "http://rikumo-rinnku.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://rikumo-rinnku.github.io/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B017%EF%BC%9A%E5%B9%BB%E6%83%B3%E7%9C%9F%E5%A2%83%E5%89%A7%E8%AF%97%E6%A8%A1%E5%9D%97%EF%BC%88phantom_theater.py%EF%BC%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":true,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '原神剧情爬虫笔记17：幻想真境剧诗模块（phantom_theater.py）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/白毛吸血鬼.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/Hexo%E5%8D%9A%E5%AE%A2/back-sky-white.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/白毛吸血鬼.png" alt="Logo"><span class="site-name">璃雲の部屋</span></a><a class="nav-page-title" href="/"><span class="site-name">原神剧情爬虫笔记17：幻想真境剧诗模块（phantom_theater.py）</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">原神剧情爬虫笔记17：幻想真境剧诗模块（phantom_theater.py）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-31T08:30:00.000Z" title="发表于 2026-08-31 16:30:00">2026-08-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-31T08:30:00.000Z" title="更新于 2026-08-31 16:30:00">2026-08-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/">开发记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><blockquote>
+<p>本文档记录了《原神》观测枢幻想真境剧诗（月谕圣牌）爬虫模块的设计思路、API 分析、数据结构解析和实现细节，适用于项目维护和后续扩展。</p>
+</blockquote>
+<h3 id="一、模块概述">一、模块概述</h3>
+<p><strong>模块名称</strong>：<code>phantom_theater.py</code><br>
+<strong>功能</strong>：从米哈游观测枢 Wiki 爬取所有“幻想真境剧诗”玩法中的“月谕圣牌”描述文本，包括：</p>
+<ul>
+<li>圣牌名称（如「月谕圣牌·一·魔法师」）</li>
+<li>圣牌描述/诗歌（每张牌包含一段诗意的文字，具有 Lore/文化价值）</li>
+</ul>
+<p><strong>输出</strong>：每张圣牌保存为一个 <code>.txt</code> 文本文件，存放在 <code>data/cleaned/phantom_theater/</code> 目录下。</p>
+<p><strong>增量策略</strong>：</p>
+<ul>
+<li>使用 <code>crawled.json</code> 记录已爬取的圣牌 ID。</li>
+<li>每次运行先检查 ID 是否已记录，若已记录则跳过，避免重复请求。</li>
+</ul>
+<h3 id="二、技术栈">二、技术栈</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">组件</th>
+<th style="text-align:left">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Python 3.12+</td>
+<td style="text-align:left">运行环境</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>requests</code> + <code>tenacity</code></td>
+<td style="text-align:left">HTTP 请求与自动重试</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>json</code></td>
+<td style="text-align:left">解析 API 响应</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>logging</code></td>
+<td style="text-align:left">日志记录（文件 + 控制台）</td>
+</tr>
+<tr>
+<td style="text-align:left">项目内部模块</td>
+<td style="text-align:left"><code>client</code>, <code>parser</code>, <code>config_loader</code>, <code>storage</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="三、API-分析">三、API 分析</h3>
+<h4 id="3-1-圣牌列表-API">3.1 圣牌列表 API</h4>
+<ul>
+<li><strong>URL</strong>: <code>https://act-api-takumi-static.mihoyo.com/common/blackboard/ys_obc/v1/home/content/list</code></li>
+<li><strong>参数</strong>: <code>app_sn=ys_obc</code>, <code>channel_id=249</code>（幻想真境剧诗频道）</li>
+<li><strong>响应结构</strong>:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data.list[0] → name: &quot;幻想真境剧诗&quot;</span><br><span class="line">    └── list[] → 每个条目</span><br><span class="line">        ├── content_id: 条目 ID</span><br><span class="line">        ├── title: 条目名称</span><br><span class="line">        ├── summary: 简介</span><br><span class="line">        └── ext: 包含分类标签的 JSON 字符串</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="3-2-圣牌详情-API">3.2 圣牌详情 API</h4>
+<ul>
+<li><strong>URL</strong>: <code>https://act-api-takumi-static.mihoyo.com/hoyowiki/genshin/wapi/entry_page</code></li>
+<li><strong>参数</strong>: <code>app_sn=ys_obc</code>, <code>entry_page_id={圣牌ID}</code>, <code>lang=zh-cn</code></li>
+<li><strong>核心字段</strong>:
+<ul>
+<li><code>page.modules[].components[].data</code>：包含 <code>multi_table</code> 组件。</li>
+<li><code>tables[].row[][1]</code>：第二列包含圣牌的标题和诗歌文本。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-3-特殊说明">3.3 特殊说明</h4>
+<ul>
+<li>幻想真境剧诗频道的列表数据中，包含多种类型的条目（月谕圣牌、演出事件、演出奖励、演出规则等）。</li>
+<li>本模块<strong>只保留“类别/月谕圣牌”的条目</strong>，其他类型全部跳过。</li>
+<li>圣牌的描述文本以<strong>诗歌/塔罗牌释义</strong>的形式呈现，具有 Lore 价值，是剧情文本的重要补充。</li>
+</ul>
+<h3 id="四、数据结构与解析逻辑">四、数据结构与解析逻辑</h3>
+<h4 id="4-1-列表-ext-字段解析">4.1 列表 <code>ext</code> 字段解析</h4>
+<p><code>ext</code> 是一个 JSON 字符串，包含条目的分类标签：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;c_249&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;filter&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;[\&quot;类别/月谕圣牌\&quot;]&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>解析后得到 <code>category: &quot;月谕圣牌&quot;</code>，用于过滤非圣牌条目。</p>
+<h4 id="4-2-详情页“圣牌描述”解析">4.2 详情页“圣牌描述”解析</h4>
+<p>圣牌详情页的 <code>multi_table</code> 组件结构：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;component_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;multi_table&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;data&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;tables&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;row&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">[</span><span class="string">&quot;&lt;img...&gt;&quot;</span><span class="punctuation">,</span> <span class="string">&quot;&lt;h1&gt;一·魔法师&lt;/h1&gt;&lt;p&gt;意志如甘美的茶水般流涌...&lt;/p&gt;&quot;</span><span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong>提取逻辑</strong>：</p>
+<ol>
+<li>遍历 <code>modules</code>，查找 <code>multi_table</code> 组件。</li>
+<li>遍历 <code>tables</code>，取每个 <code>row</code> 的**第二列（索引 1）**的 HTML 文本。</li>
+<li>使用 <code>clean_html_to_text</code> 清洗 HTML，保留诗歌格式。</li>
+<li>如果一行只有一列（可能某些牌结构不同），则取第一列（索引 0）。</li>
+</ol>
+<p><strong>输出格式</strong>：每段描述用空行分隔，保留原诗的排版风格。</p>
+<h4 id="4-3-跳过模块">4.3 跳过模块</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">条目类型</th>
+<th style="text-align:left">是否爬取</th>
+<th style="text-align:left">原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">月谕圣牌</td>
+<td style="text-align:left">✅ 爬取</td>
+<td style="text-align:left">包含诗意文本，有 Lore 价值</td>
+</tr>
+<tr>
+<td style="text-align:left">演出事件</td>
+<td style="text-align:left">❌ 跳过</td>
+<td style="text-align:left">纯列表/机制说明，无叙述文本</td>
+</tr>
+<tr>
+<td style="text-align:left">演出奖励</td>
+<td style="text-align:left">❌ 跳过</td>
+<td style="text-align:left">纯数值列表</td>
+</tr>
+<tr>
+<td style="text-align:left">演出规则</td>
+<td style="text-align:left">❌ 跳过</td>
+<td style="text-align:left">纯机制说明</td>
+</tr>
+<tr>
+<td style="text-align:left">本期规则</td>
+<td style="text-align:left">❌ 跳过</td>
+<td style="text-align:left">纯机制说明</td>
+</tr>
+<tr>
+<td style="text-align:left">外观奖励</td>
+<td style="text-align:left">❌ 跳过</td>
+<td style="text-align:left">纯列表</td>
+</tr>
+</tbody>
+</table>
+<h3 id="五、输出格式">五、输出格式</h3>
+<p>每张圣牌保存为一个 <code>.txt</code> 文件，文件名使用圣牌名称（非法字符替换为 <code>_</code>）。</p>
+<p><strong>内容结构示例</strong>（以“月谕圣牌·一·魔法师”为例）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">卡牌名称：月谕圣牌·一·魔法师</span><br><span class="line">简介：幻想真境剧诗 月谕圣牌·一·魔法师</span><br><span class="line"></span><br><span class="line">【描述】</span><br><span class="line">一·魔法师</span><br><span class="line">意志如甘美的茶水般流涌，</span><br><span class="line">现实因兴致与闲暇而被塑造。</span><br><span class="line">杯盏、羽毛笔、餐刀与装着甜点的圆盘，</span><br><span class="line">小小的秘仪，调和的四质，</span><br><span class="line">令人怀念的，午后的喧闹。</span><br><span class="line"></span><br><span class="line">你说：万物皆备于我，</span><br><span class="line">但归根结底，</span><br><span class="line">那一个顷刻的欢笑与「魔法」，</span><br><span class="line">也不过是无尽空无中</span><br><span class="line">凝聚而成的一点光。</span><br></pre></td></tr></table></figure>
+<h3 id="六、核心函数说明">六、核心函数说明</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">函数</th>
+<th style="text-align:left">职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>parse_card_ext(ext_str)</code></td>
+<td style="text-align:left">解析 <code>ext.filter.text</code> 中的 JSON 数组，提取类别标签。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>get_card_list()</code></td>
+<td style="text-align:left">获取所有圣牌列表，仅保留“类别/月谕圣牌”的条目。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>parse_card_detail(page_data)</code></td>
+<td style="text-align:left">从详情页的 <code>multi_table</code> 中提取圣牌描述文本（诗歌/释义）。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>generate_card_content(card_info, description)</code></td>
+<td style="text-align:left">将圣牌信息和描述文本格式化为纯文本内容。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>process_card(card, output_dir)</code></td>
+<td style="text-align:left">请求详情 API，解析并保存单个圣牌。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>run()</code></td>
+<td style="text-align:left">主流程，控制爬取范围和增量逻辑。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="七、配置要求">七、配置要求</h3>
+<p>在 <code>config/channels.json</code> 中必须包含以下条目：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;phantom_theater&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;channel_id&quot;</span><span class="punctuation">:</span> <span class="number">249</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;幻想真境剧诗&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="八、使用方法">八、使用方法</h3>
+<h4 id="8-1-运行">8.1 运行</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> E:\projects\genshin-story-crawler</span><br><span class="line">uv run python -m src.modules.phantom_theater</span><br></pre></td></tr></table></figure>
+<h4 id="8-2-控制爬取范围">8.2 控制爬取范围</h4>
+<p>修改 <code>run()</code> 中的 <code>test_limit</code> 变量：</p>
+<ul>
+<li><code>test_limit = 5</code>：只处理前 5 张圣牌。</li>
+<li><code>test_limit = 0</code> 或 <code>None</code>：处理所有圣牌。</li>
+</ul>
+<h3 id="九、日志与报告">九、日志与报告</h3>
+<ul>
+<li><strong>日志文件</strong>：<code>logs/phantom_theater.log</code>（包含时间戳、级别、模块、行号、消息）。</li>
+<li><strong>爬取报告</strong>：<code>logs/phantom_theater_report.json</code>，包含统计信息：<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;total&quot;</span><span class="punctuation">:</span> <span class="number">22</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;processed&quot;</span><span class="punctuation">:</span> <span class="number">22</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;failed&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;skipped&quot;</span><span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="十、注意事项">十、注意事项</h3>
+<ol>
+<li><strong>仅保留圣牌</strong>：幻想真境剧诗频道下有多种条目类型（演出事件、演出奖励等），本模块仅爬取“类别/月谕圣牌”的条目。</li>
+<li><strong>无描述则跳过</strong>：若某张圣牌没有描述文本，该圣牌将被跳过，不生成文件。</li>
+<li><strong>诗歌格式保留</strong>：<code>clean_html_to_text</code> 会保留原诗的换行和排版格式，确保诗歌的可读性。</li>
+<li><strong>文件名清洗</strong>：圣牌名称可能包含特殊字符（如 <code>·</code>、<code>・</code>），使用 <code>safe_filename</code> 替换为下划线。</li>
+<li><strong>空内容过滤</strong>：若圣牌详情页无任何可提取文本，该圣牌将被跳过，不生成文件。</li>
+</ol>
+<h3 id="十一、与已有模块的对比">十一、与已有模块的对比</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">特性</th>
+<th style="text-align:left">圣牌模块（<code>phantom_theater.py</code>）</th>
+<th style="text-align:left">NPC 模块（<code>npc.py</code>）</th>
+<th style="text-align:left">动物模块（<code>animal.py</code>）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">频道 ID</td>
+<td style="text-align:left"><code>249</code></td>
+<td style="text-align:left"><code>20</code></td>
+<td style="text-align:left"><code>49</code></td>
+</tr>
+<tr>
+<td style="text-align:left">分类标签</td>
+<td style="text-align:left">仅“类别”</td>
+<td style="text-align:left">地区、类型、牌手挑战等</td>
+<td style="text-align:left">动物类型、是否可捕获</td>
+</tr>
+<tr>
+<td style="text-align:left">列表结构</td>
+<td style="text-align:left">扁平列表，需过滤</td>
+<td style="text-align:left">扁平列表</td>
+<td style="text-align:left">扁平列表</td>
+</tr>
+<tr>
+<td style="text-align:left">核心内容</td>
+<td style="text-align:left">诗歌/描述文本</td>
+<td style="text-align:left">NPC 信息、对话、商品</td>
+<td style="text-align:left">背景故事</td>
+</tr>
+<tr>
+<td style="text-align:left">特有组件</td>
+<td style="text-align:left"><code>multi_table</code>（单行双列）</td>
+<td style="text-align:left"><code>npc_base_info</code>、<code>collapse_panel</code></td>
+<td style="text-align:left"><code>good_desc</code></td>
+</tr>
+<tr>
+<td style="text-align:left">输出粒度</td>
+<td style="text-align:left">每张圣牌一个文件</td>
+<td style="text-align:left">每个 NPC 一个文件</td>
+<td style="text-align:left">每个动物一个文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="十二、后续优化方向">十二、后续优化方向</h3>
+<ol>
+<li><strong>自动识别所有圣牌</strong>：当前通过 <code>ext</code> 中的“类别/月谕圣牌”过滤，未来如果新增“塔罗牌”等其他类别，可扩展过滤条件。</li>
+<li><strong>多语言支持</strong>：圣牌描述目前仅中文，未来可扩展为多语言版本。</li>
+<li><strong>分页支持</strong>：当前频道下条目较少（~30），无需分页。如果未来扩展，可参考其他模块的分页逻辑。</li>
+</ol>
+<p><strong>文档版本</strong>：1.0<br>
+<strong>最后更新</strong>：2026-07-05<br>
+<strong>作者</strong>：Rikum</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://rikumo-rinnku.github.io">Rikumo.Rinnku</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://rikumo-rinnku.github.io/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B017%EF%BC%9A%E5%B9%BB%E6%83%B3%E7%9C%9F%E5%A2%83%E5%89%A7%E8%AF%97%E6%A8%A1%E5%9D%97%EF%BC%88phantom_theater.py%EF%BC%89/">http://rikumo-rinnku.github.io/原神剧情爬虫笔记17：幻想真境剧诗模块（phantom_theater.py）/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://rikumo-rinnku.github.io" target="_blank">璃雲の部屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8E%9F%E7%A5%9E%E7%88%AC%E8%99%AB/">原神爬虫</a><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post-share"><div class="social-share" data-image="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/白毛吸血鬼.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B018%EF%BC%9A%E6%B4%9E%E5%A4%A9%E6%91%86%E8%AE%BE%E6%A8%A1%E5%9D%97%EF%BC%88furnishing.py%EF%BC%89/" title="原神剧情爬虫笔记18：洞天摆设模块（furnishing.py）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">原神剧情爬虫笔记18：洞天摆设模块（furnishing.py）</div></div><div class="info-2"><div class="info-item-1"> 本文档记录了《原神》观测枢洞天（摆设/家具）爬虫模块的设计思路、API 分析、数据结构解析和实现细节，适用于项目维护和后续扩展。  一、模块概述 模块名称：furnishing.py 功能：从米哈游观测枢 Wiki 爬取所有洞天摆设/家具的详细信息，包括：  摆设名称、区域（室内/室外）、类型（墙饰/摆件/地貌/套装等） 品质（二星/三星/四星/五星） 摆设获取方式、图纸获取方式 物品描述（核心文本，包含背景/文化叙述） 获取途径（制作/宝箱/活动等） 相关套装（所属好感套装名称）  输出：每个摆设保存为一个 .txt 文本文件，存放在 data/cleaned/furnishing/ 目录下。 增量策略：  使用 crawled.json 记录已爬取的摆设 ID。 每次运行先检查 ID 是否已记录，若已记录则跳过，避免重复请求。 若官方更新了内容，需手动从 crawled.json 中删除对应 ID，重新运行以更新。  二、技术栈    组件 用途     Python 3.12+ 运行环境   requests + tenacity HTTP 请求与自动重试   json ...</div></div></div></a><a class="pagination-related" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B016%EF%BC%9A%E5%90%8D%E7%89%87%E6%A8%A1%E5%9D%97%EF%BC%88namecard.py%EF%BC%89/" title="原神剧情爬虫笔记16：名片模块（namecard.py）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">原神剧情爬虫笔记16：名片模块（namecard.py）</div></div><div class="info-2"><div class="info-item-1"> 本文档记录了《原神》名片爬虫模块的设计思路、API 分析、数据结构解析和实现细节。该模块是项目中唯一使用第三方 Wiki 数据源的模块，适用于项目维护和后续扩展。  一、模块概述 模块名称：namecard.py 数据源：Bilibili Wiki（https://wiki.biligame.com/ys/名片） 功能：爬取所有名片的详细信息，包括：  名片名称（如「阿贝多·阳花」） 类型（角色好感名片/纪行名片/活动名片等） 获取方式（好感度礼包/纪行/活动等） 介绍文本（名片的描述文字） 实装版本（1.0 ~ 5.x）  输出：每张名片保存为一个 .txt 文本文件，存放在 data/cleaned/namecard/ 目录下。 增量策略：  使用 crawled.json 记录已爬取的名片 ID（pageid）。 每次运行先检查 ID 是否已记录，若已记录则跳过，避免重复请求。  二、技术栈    组件 用途     Python 3.12+ 运行环境   requests HTTP 请求   BeautifulSoup (bs4) 解析 HTML 表格   json 数...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B009%EF%BC%9A%E5%9C%B0%E5%9B%BE%E6%96%87%E6%9C%AC%E6%A8%A1%E5%9D%97%EF%BC%88map_text.py%EF%BC%89/" title="原神剧情爬虫笔记09：地图文本模块（map_text.py）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-31</div><div class="info-item-2">原神剧情爬虫笔记09：地图文本模块（map_text.py）</div></div><div class="info-2"><div class="info-item-1"> 本文档记录了《原神》观测枢地图文本爬虫模块的设计思路、API 分析、数据结构解析和实现细节，适用于项目维护和后续扩展。  一、模块概述 模块名称：map_text.py 功能：从米哈游观测枢 Wiki 爬取所有地图交互文本的详细信息，包括：  地图文本标题、地区、分类（对话项/闪光点）、是否活动限定 交互文本内容（interactive_dialogue 中所有 dialogue 字段的合并文本） 相关任务列表（collapse_panel 模块）  输出：每个地图文本条目保存为一个 .txt 文本文件，存放在 data/cleaned/map_text/ 目录下。 增量策略：  使用 crawled.json 记录已爬取的文本 ID。 每次运行先检查 ID 是否已记录，若已记录则跳过，避免重复请求。 若官方更新了内容，需手动从 crawled.json 中删除对应 ID，重新运行以更新。  二、技术栈    组件 用途     Python 3.12+ 运行环境   requests + tenacity HTTP 请求与自动重试   json 解析 API 响应   Bea...</div></div></div></a><a class="pagination-related" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B011%EF%BC%9A%E8%83%8C%E5%8C%85%E7%89%A9%E5%93%81%E6%A8%A1%E5%9D%97%EF%BC%88item.py%EF%BC%89/" title="原神剧情爬虫笔记11：背包物品模块（item.py）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-31</div><div class="info-item-2">原神剧情爬虫笔记11：背包物品模块（item.py）</div></div><div class="info-2"><div class="info-item-1"> 本文档记录了《原神》观测枢背包物品爬虫模块的设计思路、API 分析、数据结构解析和实现细节，适用于项目维护和后续扩展。  一、模块概述 模块名称：item.py 功能：从米哈游观测枢 Wiki 爬取所有背包物品的详细信息，包括：  物品名称、道具类型（任务道具/食材/小道具/角色培养素材等） 获取方式（任务获取/活动获取/地图探索等）、星级 描述、用途 多版本变体信息（同一物品的不同来源/版本） 阅读内容（多章节日记、书籍等） 表格数据（如「森林书」中的冒险记录、曲调列表等）  输出：每个物品保存为一个 .txt 文本文件，存放在 data/cleaned/item/ 目录下。 增量策略：  使用 crawled.json 记录已爬取的物品 ID。 每次运行先检查 ID 是否已记录，若已记录则跳过，避免重复请求。 若官方更新了内容，需手动从 crawled.json 中删除对应 ID，重新运行以更新。  二、技术栈    组件 用途     Python 3.12+ 运行环境   requests + tenacity HTTP 请求与自动重试   json 解析 API 响应...</div></div></div></a><a class="pagination-related" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B020%EF%BC%9A%E7%81%B0%E7%9C%B8%E5%9B%BE%E9%89%B4%E6%A8%A1%E5%9D%97%EF%BC%88gray_eye.py%EF%BC%89/" title="原神剧情爬虫笔记20：灰眸图鉴模块（gray_eye.py）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-31</div><div class="info-item-2">原神剧情爬虫笔记20：灰眸图鉴模块（gray_eye.py）</div></div><div class="info-2"><div class="info-item-1"> 本文档记录《原神》观测枢「灰眸」图鉴模块的接入过程，包括频道发现、三类详情组件解析、增量抓取、文本输出和一次实际解析故障的修复过程。它既是模块说明，也是后续新增图鉴频道时可复用的排查案例。   一、模块背景与目标 2026 年 8 月，观测枢新增了独立的「灰眸」图鉴分类。该分类记录了与影域探索有关的系统说明、臻冰造物、机关、外观与可交互的讯息文本。 虽然它不完全等同于传统剧情任务，但其中的设定说明、人物背景和交互对话具有语料价值，因此将整个频道纳入爬虫，而不是只手动保存少量剧情词条。 模块名称：src/modules/gray_eye.py 模块标识：gray_eye 显示名称：灰眸 频道 ID：278 输出目录：data/cleaned/gray_eye/ 输出粒度：一个观测枢词条对应一个文本文件，文件名为稳定的词条 ID，例如 509292.txt。 模块目标如下：  自动读取「灰眸」频道目录，发现新增词条。 提取图鉴说明、造物信息、外观获取方式和交互对话。 忽略纯图片与图标，保留可阅读、可检索的文字。 使用已有的增量记录机制，避免重复请求和重复写入。 接入统一运行入口、模...</div></div></div></a><a class="pagination-related" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B006%EF%BC%9A%E5%9C%A3%E9%81%97%E7%89%A9%E6%A8%A1%E5%9D%97%EF%BC%88artifact.py%EF%BC%89/" title="原神剧情爬虫笔记06：圣遗物模块（artifact.py）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-31</div><div class="info-item-2">原神剧情爬虫笔记06：圣遗物模块（artifact.py）</div></div><div class="info-2"><div class="info-item-1"> 本文档记录了《原神》观测枢圣遗物爬虫模块的设计思路、API 分析、数据结构解析和实现细节，适用于项目维护和后续扩展。   一、模块概述 模块名称：artifact.py 功能：从米哈游观测枢 Wiki 爬取所有圣遗物套装的详细信息，包括：  套装名称、星级、获取途径 2件套/4件套效果 五个部件（生之花、死之羽、时之沙、空之杯、理之冠）的名称、描述和背景故事（核心）  输出：每个圣遗物套装保存为一个 .txt 文本文件，存放在 data/cleaned/artifact/ 目录下。 增量策略：  使用 crawled.json 记录已爬取的套装 ID。 每次运行先检查 ID 是否已记录，若已记录则跳过，避免重复请求。 若官方更新了内容，需手动从 crawled.json 中删除对应 ID，重新运行以更新。   二、技术栈    组件 用途     Python 3.12+ 运行环境   requests + tenacity HTTP 请求与自动重试   json 解析 API 响应   BeautifulSoup (clean_html_to_text) HTML 清洗   ...</div></div></div></a><a class="pagination-related" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B005%EF%BC%9A%E6%AD%A6%E5%99%A8%E6%A8%A1%E5%9D%97%EF%BC%88weapon.py%EF%BC%89/" title="原神剧情爬虫笔记05：武器模块（weapon.py）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-31</div><div class="info-item-2">原神剧情爬虫笔记05：武器模块（weapon.py）</div></div><div class="info-2"><div class="info-item-1"> 本文档记录了《原神》观测枢武器爬虫模块的设计思路、API 分析、数据结构解析和实现细节，适用于项目维护和后续扩展。   一、模块概述 模块名称：weapon.py 功能：从米哈游观测枢 Wiki 爬取所有武器的详细信息，包括：  武器基础信息（名称、类型、星级） 武器技能效果描述 武器背景故事（相关故事） 获取途径  输出：每个武器保存为一个 .txt 文本文件，存放在 data/cleaned/weapon/ 目录下。 增量策略：  使用 crawled.json 记录已爬取的武器 ID。 每次运行先检查 ID 是否已记录，若已记录则跳过，避免重复请求。 若官方更新了武器内容，需手动从 crawled.json 中删除对应 ID，重新运行以更新。   二、技术栈    组件 用途     Python 3.12+ 运行环境   requests + tenacity HTTP 请求与自动重试   json 解析 API 响应   BeautifulSoup (clean_html_to_text) HTML 清洗   logging 日志记录（文件 + 控制台）   项目内部...</div></div></div></a><a class="pagination-related" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B001%EF%BC%9A%E4%BB%BB%E5%8A%A1%E5%89%A7%E6%83%85%E6%A8%A1%E5%9D%97%E8%A7%84%E5%88%92/" title="原神剧情爬虫笔记01：任务剧情模块规划"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-31</div><div class="info-item-2">原神剧情爬虫笔记01：任务剧情模块规划</div></div><div class="info-2"><div class="info-item-1"> 本文档记录了从零开始构建《原神》任务剧情爬虫的完整过程，包括 API 分析、数据结构解析、子任务拆分、对话树遍历、日志与报告机制等，适用于后续维护和扩展。   一、项目背景 在完成角色模块后，项目进入任务模块的开发。任务模块的目标是：  获取任务列表：从观测枢 API 获取所有任务的 ID、名称、类型、区域、版本号。 获取任务详情：对每个任务，请求详情 API，解析出子任务结构、流程梗概、详细对话。 子任务拆分：将包含多个子任务的任务拆分为独立文件，便于 RAG 检索。 增量爬取：记录已爬取的任务 ID，避免重复请求。 日志与报告：记录爬取过程中的状态，生成可追溯的爬取报告。   二、API 分析 2.1 任务列表 API  URL: https://act-api-takumi-static.mihoyo.com/common/blackboard/ys_obc/v1/home/content/list 参数: app_sn=ys_obc, channel_id=43（任务频道） 响应结构:12345data.list[0] → &quot;任务&quot; 分类    └─...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/白毛吸血鬼.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Rikumo.Rinnku</div><div class="author-info-description">瞎折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A8%A1%E5%9D%97%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">一、模块概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8A%80%E6%9C%AF%E6%A0%88"><span class="toc-number">2.</span> <span class="toc-text">二、技术栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81API-%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">三、API 分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%9C%A3%E7%89%8C%E5%88%97%E8%A1%A8-API"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 圣牌列表 API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E5%9C%A3%E7%89%8C%E8%AF%A6%E6%83%85-API"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 圣牌详情 API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E7%89%B9%E6%AE%8A%E8%AF%B4%E6%98%8E"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 特殊说明</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E8%A7%A3%E6%9E%90%E9%80%BB%E8%BE%91"><span class="toc-number">4.</span> <span class="toc-text">四、数据结构与解析逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E5%88%97%E8%A1%A8-ext-%E5%AD%97%E6%AE%B5%E8%A7%A3%E6%9E%90"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 列表 ext 字段解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E8%AF%A6%E6%83%85%E9%A1%B5%E2%80%9C%E5%9C%A3%E7%89%8C%E6%8F%8F%E8%BF%B0%E2%80%9D%E8%A7%A3%E6%9E%90"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 详情页“圣牌描述”解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-%E8%B7%B3%E8%BF%87%E6%A8%A1%E5%9D%97"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 跳过模块</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">五、输出格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="toc-number">6.</span> <span class="toc-text">六、核心函数说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE%E8%A6%81%E6%B1%82"><span class="toc-number">7.</span> <span class="toc-text">七、配置要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">8.</span> <span class="toc-text">八、使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#8-1-%E8%BF%90%E8%A1%8C"><span class="toc-number">8.1.</span> <span class="toc-text">8.1 运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-2-%E6%8E%A7%E5%88%B6%E7%88%AC%E5%8F%96%E8%8C%83%E5%9B%B4"><span class="toc-number">8.2.</span> <span class="toc-text">8.2 控制爬取范围</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%97%A5%E5%BF%97%E4%B8%8E%E6%8A%A5%E5%91%8A"><span class="toc-number">9.</span> <span class="toc-text">九、日志与报告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">10.</span> <span class="toc-text">十、注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E4%B8%8E%E5%B7%B2%E6%9C%89%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">11.</span> <span class="toc-text">十一、与已有模块的对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E5%90%8E%E7%BB%AD%E4%BC%98%E5%8C%96%E6%96%B9%E5%90%91"><span class="toc-number">12.</span> <span class="toc-text">十二、后续优化方向</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B020%EF%BC%9A%E7%81%B0%E7%9C%B8%E5%9B%BE%E9%89%B4%E6%A8%A1%E5%9D%97%EF%BC%88gray_eye.py%EF%BC%89/" title="原神剧情爬虫笔记20：灰眸图鉴模块（gray_eye.py）">原神剧情爬虫笔记20：灰眸图鉴模块（gray_eye.py）</a><time datetime="2026-08-31T10:00:00.000Z" title="发表于 2026-08-31 18:00:00">2026-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B019%EF%BC%9A%E8%A3%85%E6%89%AE%E6%A8%A1%E5%9D%97%EF%BC%88outfit.py%EF%BC%89/" title="原神剧情爬虫笔记19：装扮模块（outfit.py）">原神剧情爬虫笔记19：装扮模块（outfit.py）</a><time datetime="2026-08-31T09:30:00.000Z" title="发表于 2026-08-31 17:30:00">2026-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B018%EF%BC%9A%E6%B4%9E%E5%A4%A9%E6%91%86%E8%AE%BE%E6%A8%A1%E5%9D%97%EF%BC%88furnishing.py%EF%BC%89/" title="原神剧情爬虫笔记18：洞天摆设模块（furnishing.py）">原神剧情爬虫笔记18：洞天摆设模块（furnishing.py）</a><time datetime="2026-08-31T09:00:00.000Z" title="发表于 2026-08-31 17:00:00">2026-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B017%EF%BC%9A%E5%B9%BB%E6%83%B3%E7%9C%9F%E5%A2%83%E5%89%A7%E8%AF%97%E6%A8%A1%E5%9D%97%EF%BC%88phantom_theater.py%EF%BC%89/" title="原神剧情爬虫笔记17：幻想真境剧诗模块（phantom_theater.py）">原神剧情爬虫笔记17：幻想真境剧诗模块（phantom_theater.py）</a><time datetime="2026-08-31T08:30:00.000Z" title="发表于 2026-08-31 16:30:00">2026-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B016%EF%BC%9A%E5%90%8D%E7%89%87%E6%A8%A1%E5%9D%97%EF%BC%88namecard.py%EF%BC%89/" title="原神剧情爬虫笔记16：名片模块（namecard.py）">原神剧情爬虫笔记16：名片模块（namecard.py）</a><time datetime="2026-08-31T08:00:00.000Z" title="发表于 2026-08-31 16:00:00">2026-08-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://picgo-1306174022.cos.ap-nanjing.myqcloud.com/often_img/Hexo%E5%8D%9A%E5%AE%A2/back-sky-white.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By Rikumo.Rinnku</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5"></script><script src="/js/main.js?v=5.5.5"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.5"></script></div></div></body></html>
