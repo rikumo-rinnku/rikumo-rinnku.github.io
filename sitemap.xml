@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://rikumo-rinnku.github.io/about/index.html</loc>
+    
+    <lastmod>2026-09-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://rikumo-rinnku.github.io/%E5%8E%9F%E7%A5%9E%E5%89%A7%E6%83%85%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B020%EF%BC%9A%E7%81%B0%E7%9C%B8%E5%9B%BE%E9%89%B4%E6%A8%A1%E5%9D%97%EF%BC%88gray_eye.py%EF%BC%89/</loc>
     
     <lastmod>2026-08-31</lastmod>
@@ -219,15 +228,6 @@
   
   <url>
     <loc>http://rikumo-rinnku.github.io/Gallery/index.html</loc>
-    
-    <lastmod>2026-07-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://rikumo-rinnku.github.io/about/index.html</loc>
     
     <lastmod>2026-07-06</lastmod>
     
