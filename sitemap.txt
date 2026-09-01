@@ -55,12 +55,12 @@ http://rikumo-rinnku.github.io/tags/%E4%BC%A0%E6%84%9F%E5%99%A8%E4%B8%8E%E6%A3%8
 http://rikumo-rinnku.github.io/tags/%E4%B8%8A%E8%AF%BE%E7%AC%94%E8%AE%B0/
 http://rikumo-rinnku.github.io/tags/%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93%E5%8E%9F%E7%90%86/
 http://rikumo-rinnku.github.io/tags/%E5%8D%95%E7%89%87%E6%9C%BA/
-http://rikumo-rinnku.github.io/tags/%E8%A7%A3%E5%AF%86%E6%B8%B8%E6%88%8F/
-http://rikumo-rinnku.github.io/tags/%E6%81%90%E6%80%96%E6%B8%B8%E6%88%8F/
-http://rikumo-rinnku.github.io/tags/%E5%8E%9F%E7%A5%9E%E5%8D%83%E6%98%9F%E5%A5%87%E5%9F%9F/
 http://rikumo-rinnku.github.io/tags/%E5%8E%9F%E7%A5%9E%E7%88%AC%E8%99%AB/
 http://rikumo-rinnku.github.io/tags/Python/
 http://rikumo-rinnku.github.io/tags/%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1/
+http://rikumo-rinnku.github.io/tags/%E8%A7%A3%E5%AF%86%E6%B8%B8%E6%88%8F/
+http://rikumo-rinnku.github.io/tags/%E6%81%90%E6%80%96%E6%B8%B8%E6%88%8F/
+http://rikumo-rinnku.github.io/tags/%E5%8E%9F%E7%A5%9E%E5%8D%83%E6%98%9F%E5%A5%87%E5%9F%9F/
 http://rikumo-rinnku.github.io/categories/%E7%AC%94%E8%AE%B0/
 http://rikumo-rinnku.github.io/categories/%E6%95%99%E6%A1%88/
 http://rikumo-rinnku.github.io/categories/%E6%B8%B8%E6%88%8F%E6%B5%8B%E8%AF%84/
